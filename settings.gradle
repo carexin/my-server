@@ -1,2 +1,4 @@
 rootProject.name = 'my-server'
+include 'web-servlet'
+include 'server'
 
