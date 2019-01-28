@@ -1,4 +1,4 @@
-package org.liyd.server;
+package server;
 
 import javax.servlet.Servlet;
 import java.io.File;
@@ -9,6 +9,7 @@ import java.net.URLStreamHandler;
 
 /**
  * servlet处理器
+ *
  * @author liyudong
  */
 public class ServletProcessor {
@@ -20,7 +21,6 @@ public class ServletProcessor {
     /**
      * 应在初始化时就把所有的servlet class加载起来
      */
-
 
 
     URLClassLoader loader = null;
@@ -59,7 +59,7 @@ public class ServletProcessor {
 
     try {
       servlet = (Servlet) myClass.getDeclaredConstructor().newInstance();
-      servlet.service(request, response);
+      servlet.service(new RequestFacade(request), new ResponseFacade(response));
     } catch (Exception e) {
       System.out.println(e.toString());
     } catch (Throwable e) {

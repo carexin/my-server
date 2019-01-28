@@ -1,72 +1,34 @@
-package org.liyd.server;
+package server;
 
 import javax.servlet.*;
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.Enumeration;
 import java.util.Locale;
 import java.util.Map;
 
+public class RequestFacade implements ServletRequest {
 
-/**
- * @author liyudong
- */
-public class Request implements ServletRequest {
-  private InputStream input;
-  private String uri;
+  private ServletRequest request;
 
-  public Request(InputStream input) {
-    this.input = input;
-  }
-
-  public void parse() {
-    // Read a set of characters from the socket
-    StringBuffer request = new StringBuffer(2048);
-    int i;
-    byte[] buffer = new byte[2048];
-    try {
-      i = input.read(buffer);
-    } catch (IOException e) {
-      e.printStackTrace();
-      i = -1;
-    }
-    for (int j = 0; j < i; j++) {
-      request.append((char) buffer[j]);
-    }
-    uri = parseUri(request.toString());
-  }
-
-  private String parseUri(String requestString) {
-    int index1, index2;
-    index1 = requestString.indexOf(' ');
-    if (index1 != -1) {
-      index2 = requestString.indexOf(' ', index1 + 1);
-      if (index2 > index1) {
-        return requestString.substring(index1 + 1, index2);
-      }
-    }
-    return null;
-  }
-
-  public String getUri() {
-    return uri;
+  public RequestFacade(ServletRequest request) {
+    this.request = request;
   }
 
   @Override
   public Object getAttribute(String name) {
-    return null;
+    return request.getAttribute(name);
   }
 
   @Override
   public Enumeration<String> getAttributeNames() {
-    return null;
+    return request.getAttributeNames();
   }
 
   @Override
   public String getCharacterEncoding() {
-    return null;
+    return request.getCharacterEncoding();
   }
 
   @Override
@@ -86,22 +48,22 @@ public class Request implements ServletRequest {
 
   @Override
   public String getContentType() {
-    return null;
+    return request.getContentType();
   }
 
   @Override
   public ServletInputStream getInputStream() throws IOException {
-    return null;
+    return request.getInputStream();
   }
 
   @Override
   public String getParameter(String name) {
-    return null;
+    return request.getParameter(name);
   }
 
   @Override
   public Enumeration<String> getParameterNames() {
-    return null;
+    return request.getParameterNames();
   }
 
   @Override
@@ -180,7 +142,6 @@ public class Request implements ServletRequest {
   }
 
   @Override
-  @Deprecated
   public String getRealPath(String path) {
     return null;
   }

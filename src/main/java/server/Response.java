@@ -1,4 +1,4 @@
-package org.liyd.server;
+package server;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.ServletResponse;
